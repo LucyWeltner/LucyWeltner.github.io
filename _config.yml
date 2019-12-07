@@ -1,11 +1,11 @@
 # Site settings
-author: Lucy Weltner
-title: 
+author: Lucy I Weltner
+title: Adventures in Programming
 header-img: img/home-bg.png
 email: lucyiweltner@gmail.com
-copyright_name: Lucy Weltner
+copyright_name: Lucy I Weltner
 description: > # this means to ignore newlines until "baseurl:"
-  
+  I write about my programming challenges and successes
 baseurl: "" # the subpath of your site, e.g. /blog
 twitter_username: 
 github_username:  LucyWeltner
