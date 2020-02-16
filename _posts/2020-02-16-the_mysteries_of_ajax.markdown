@@ -1,7 +1,7 @@
 ---
 layout: post
 title:      "The Mysteries Of Ajax"
-date:       2020-02-16 19:27:14 +0000
+date:       2020-02-16 14:27:15 -0500
 permalink:  the_mysteries_of_ajax
 ---
 
@@ -18,16 +18,15 @@ Last week, I encountered a mysterious problem while building a ruby on rails app
 
 Fortunately, my professors had encountered many students with this issue before. The fix was simple: just make sure the form submits a “local” request by adding the attribute local: true, like this: 
 
-<%= form_with url: results_path, local: true, method: :get do |form| %>
+```<%= form_with url: results_path, local: true, method: :get do |form| %>```
 
 My professors explained that, by default, form_with sends Ajax requests, using javascript. By setting local to true, I made sure my forms sent normal https GET requests. While I now knew how to fix my forms, I still had many questions. What is Ajax? Why would sending a form via an Ajax request make my page render incorrectly?
 
 1. How does Ajax work?
-	Let’s say you’ve created a form_with on the signup page. Users must fill out the form and press the submit button in order to sign up. At the moment the user hits “submit”, rails creates an object called a “Javascript XML request” (also known as an Ajax request). Rails then prevents the form from sending a normal POST request. Just like a regular POST request, the Javascript request object has a method variable set to post. Just like a regular POST request, the Javascript request object contains hidden data submitted by the user (we can call methods on a request object to retrieve the user-submitted data). In fact, since the Javascript request object stores all the same data as a normal post request, the server’s able to “translate” the Javascript object into a normal https POST request and transfer all the information from the Javascript object into the body of the https request. From that point on, the server doesn’t know or care that the https POST request originated as a Javascript object. The server receives what seems like a normal https post request; that request triggers a controller action; the controller accesses and manipulates the data in the http request (using the params hash); and, finally, the server sends back an https response which mostly likely redirects the user to a new page. The response contains all the html needed to render the page.
+Basically, Ajax is a way for a website to get new data without having to reload a page. Let’s say you’ve created a form_with on the signup page. Users must fill out the form and press the submit button in order to sign up. At the moment the user hits “submit”, rails creates an object called a “Javascript XML request”. Rails then prevents the form from sending a normal POST request. Just like a regular POST request, the Javascript request object has a method variable set to post. Just like a regular POST request, the Javascript request object contains hidden data submitted by the user (we can call methods on a request object to retrieve the user-submitted data). In fact, since the Javascript request object stores all the same data as a normal post request, the server’s able to “translate” the Javascript object into a normal https POST request and transfer all the information from the Javascript object into the body of the https request. From that point on, the server doesn’t know or care that the https POST request originated as a Javascript object. The server receives what seems like a normal https post request; that request triggers a controller action; the controller accesses and manipulates the data in the http request (using the params hash); and, finally, the server sends back an https response which mostly likely redirects the user to a new page. The response contains all the html needed to render the page.
 	However, when that response gets back to the browser, everything changes. Instead of  re-directing the user to another page, the server replaces the html on the current page with html from the “/users” page. For example, let’s say the browser sent a Post request using a Javascript object. A moment later, the browser receives a https response: GET the page “/users.” Instead of redirecting to “/users,” the browser retrieves all the html that would be displayed at “/users” from the https response. The browser then puts all the html into a long string (escaping any characters that have meaning in javascript), and uses the “render” method to put the html on the page (the same way a user might display a partial). As a result, while the site appears to have loaded “/users” (probably displaying a message like “You’ve successfully signed up!”), no get request to “/users” has actually been sent, and the page never actually loaded. Wow!
 
 2. Why would sending a form via an Ajax request make my page render incorrectly?
-
 To answer my second question, I first decided to figure out where, exactly, the process of sending and receiving requests broke down.
 I saw that the http GET request was sent. 
 Once I added a “puts” statement inside the controller action, I saw that the correct controller action was triggered, and the controller had access to the correct parameters.
