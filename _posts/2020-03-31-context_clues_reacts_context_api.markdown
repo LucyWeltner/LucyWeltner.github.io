@@ -25,7 +25,7 @@ The privacy setting will influence lots of small parts of the website. Ideally, 
 
 For instance, imagine your app is set up like this. A change in the privacy settings effects both the search results summary (for example, a private user's location could be hidden, or the user could be removed from search results all together) and the contact info (an email or phone number could be hidden).
 
-![Component Map](https://flic.kr/p/2iKH5yn)
+![Component Map]("https://flic.kr/p/2iKH5yn")
 
 App can easily pass the value of private as a prop to any of its three child components:
 
