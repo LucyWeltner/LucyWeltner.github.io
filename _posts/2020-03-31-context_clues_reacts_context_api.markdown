@@ -1,7 +1,7 @@
 ---
 layout: post
 title:      "Context Clues: React's Context API"
-date:       2020-03-31 22:04:16 +0000
+date:       2020-03-31 18:04:17 -0400
 permalink:  context_clues_reacts_context_api
 ---
 
@@ -12,22 +12,25 @@ To illustrate, let's look at an example. Say you’re building a Facebook-like w
 
 Where should we store the information about whether the privacy setting is on or off? Since the privacy setting effects many different components, it probably should be stored in the main App component, like this:
 
-```Class App extends React.Component {
+```
+Class App extends React.Component {
 	state: {
 		private: true
 	}
-}```
+}
+```
 
 
 The privacy setting will influence lots of small parts of the website. Ideally, all smaller components would be able to access the value of “private”. In other words, we’d like the value of “private” to act like a global variable. However, React makes this difficult, because App can only pass values to it’s immediate children. 
 
 For instance, imagine your app is set up like this. A change in the privacy settings effects both the search results summary (for example, a private user's location could be hidden, or the user could be removed from search results all together) and the contact info (an email or phone number could be hidden).
 
-(Note: I cannot get the image to show up here)
+![](https://flic.kr/p/2iKH5yn)
 
 App can easily pass the value of private as a prop to any of its three child components:
 
-```Class App extends React.Component {
+```
+Class App extends React.Component {
 	state: {
 		private: true
 	}
@@ -39,13 +42,15 @@ App can easily pass the value of private as a prop to any of its three child com
 			<ProfileContainer private={this.state.private}/>
 		</fragment>
 	}
-}```
+}
+```
 
 However, the App component cannot pass the value of “private” to any of its grandchildren (Result, About, Recent Posts and Friends).  
 
 Props can only be passed down one level: from a parent component to its children. In this case, the Profile container can pass the value of “private” it received from App to its children, like this:
 
-```Class ProfileContainer extends React.Component {
+```
+Class ProfileContainer extends React.Component {
 
 	render() {
 		<fragment>
@@ -54,17 +59,18 @@ Props can only be passed down one level: from a parent component to its children
 			<RecentPosts />
 		</fragment>
 	}
-}```
+}
+```
 
 The About component will then need to pass the prop down to Contact Info, where the value of private will (finally) effect the DOM.
 
 Just to summarize: 
 
-App: stores value of “private”, passes it to ProfileContainer
-	ProfileContainer: passes value of Private to About
-		About: passes value of Private to ContactInfo
-			ContactInfo: uses the value of Private (finally)
-			
+* App: stores value of “private”, passes it to ProfileContainer
+* ProfileContainer: passes value of Private to About
+* About: passes value of Private to ContactInfo
+* ContactInfo: uses the value of Private (finally)
+
 We passed the Private prop four levels down just to change one of small part of the website affected by the privacy setting. Worse, the ProfileContainer and About components aren’t actually using the value of private – they’re just “middlemen” that pass the value down.
 
 And this is just a simplified example – in a complex website, props might have to be passed seven or eight levels deep! Yikes!
@@ -81,8 +87,10 @@ Often, we create the context object in a separate file, then import that file in
 
 In Context.js:
 
-```const contextObj = React.createContext()
-	export default contextObj```
+```
+const contextObj = React.createContext()
+export default contextObj
+```
 	
 A context object contains two keys, Consumer and Provider; each key points to a class component. The consumer and provider components are linked; the consumer component(s) can access data stored in the provider component (more on that later). We render the components in JSX the same way we’d render any other component – by wrapping the components in < />: 
 
@@ -91,7 +99,8 @@ A rendered consumer component: <contextObj.Consumer />
 
 Back in the App render function, we wrap all App’s children in a Provider component. Any values we want to make global variables, we must store in the value attribute of the Provider component:
 
-```Import contextObj from “./context.js”
+```
+Import contextObj from “./context.js”
 Class App extends React.Component {
 	state: {
 		private: true
@@ -105,7 +114,8 @@ Class App extends React.Component {
 			<ProfileContainer private={this.state.private}/>
 		</contextObj.Provider>
 	}
-}```
+}
+```
 
 But how do we access the value of private from, say, the Contact Info component, a great-grandchild of App? First, we import the Context Object.
 
@@ -113,7 +123,8 @@ The Consumer component is a blank class component, without a render function. We
 
 Here’s where the magic comes in: the context object automatically passes the Provider’s value attribute to the function! Since the consumer component has access to the value of “private”, we can simply tell the consumer component to render different JSX depending on whether private is set to true or false.
 
-```Import contextObj from “./context.js”
+```
+Import contextObj from “./context.js”
 
 Class ContactInfo extends React.Component {
 
@@ -138,7 +149,9 @@ While I understand how to implement context in React, I still have a few questio
 
 2. I’ve seen several articles describe the child function of a consumer as the consumer’s “render” function. This makes sense, as the function gets called when the consumer component renders (and returns JSX that renders to the DOM). However, while the child function plays the role of a render function, the consumer component does not seem to have a render attribute like most other components. Re-writing the child function inside the “render” attribute, like this: 
 
-```<contextObj.Consumer render = () => ((value) => value ? (<p>This user’s contact info is 			private.</p>) : 	(<p>{user.email}</p>) />```
+```
+<contextObj.Consumer render = () => ((value) => value ? (<p>This user’s contact info is private.</p>) : (<p>{user.email}</p>) />
+```
 
 causes an error. Why can’t you tell the consumer component what to render via the render attribute? Why do you need to tell the consumer component what to render by writing a function inside it?
 
