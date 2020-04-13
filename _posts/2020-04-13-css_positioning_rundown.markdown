@@ -37,7 +37,7 @@ div.floats {
 
 Image (Result of Code):
 
-![Statically Positioned Divs](https://flic.kr/p/2iQ1nbq)
+![Statically Positioned Divs](https://live.staticflickr.com/65535/49770020656_202f9b0f43_w.jpg)
 
 <html><h3>Relative Positioning</h3></html>
 
@@ -88,7 +88,7 @@ div#rel{
 
 Image of Result: 
 
-![4 Statically Positioned Divs, 1 Relatively Positioned Div](https://flic.kr/p/2iQ2ZPp)
+![4 Statically Positioned Divs, 1 Relatively Positioned Div](https://live.staticflickr.com/65535/49770339017_bbe97176d3_w.jpg)
 
 It’s key to remember that relatively positioned elements don’t effect the static elements on the page. If you shift a relatively positioned element to the right, the other, static elements won’t move aside in response. Instead, the relatively positioned element will overlap any static elements on its right, and leave a gap where it was originally positioned.
 
@@ -147,7 +147,7 @@ div#abs{
 
 Image Result: 
 
-![Statically, Relatively and Absolutely Positioned Divs](https://flic.kr/p/2iQ1mdU)
+![Statically, Relatively and Absolutely Positioned Divs](https://live.staticflickr.com/65535/49770017436_c3fffd894d_w.jpg)
 
 <html><h3>Fixed Positioning</h3></html>
 
@@ -252,10 +252,10 @@ div#sticky {
 
 Image of The Page Before You Scroll: 
 
-![Sticky div before scrolling](https://flic.kr/p/2iQ2ZVG)
+![Sticky div before scrolling](https://live.staticflickr.com/65535/49770339382_71d50cda2d_w.jpg)
 
 Image of The Page After You Scroll (the div "sticks" 30px below the top of the page): 
 
-![Sticky div after scrolling](https://flic.kr/p/2iQ1kg8)
+![Sticky div after scrolling](https://live.staticflickr.com/65535/49770014201_9e23a95f14_w.jpg)
 
 
