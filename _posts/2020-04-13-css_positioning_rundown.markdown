@@ -1,7 +1,7 @@
 ---
 layout: post
 title:      "CSS Positioning Rundown"
-date:       2020-04-13 17:52:04 +0000
+date:       2020-04-13 13:52:05 -0400
 permalink:  css_positioning_rundown
 ---
 
@@ -10,7 +10,8 @@ When I first started coding, I treated CSS as an afterthought, something I stumb
 When I started to learn about element positioning, it helped to think about the a block of space assigned to each element on a page. For instance, if a page has four divs floating next to each other, each div will occupy a rectangle of space (you can change the width and height of each div using – you guessed it – the width and height properties). Each rectangle of space gets lined up so the divs do not overlap. Run this code to see an example. Each div is colored in so you can see exactly how much space it takes up: 
 
 HTML:
-```<html>
+```
+<html>
 	<body>
 		<div class="floats"></div>
 		<div class="floats"></div>
@@ -23,7 +24,8 @@ HTML:
 
 CSS: 
 
-```div.floats {
+```
+div.floats {
 	background: blue;
 	border: 3px solid black;
 	display: inline-block;
