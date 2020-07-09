@@ -1,7 +1,7 @@
 ---
 layout: post
 title:      "Recursion Inception"
-date:       2020-07-09 22:12:59 +0000
+date:       2020-07-09 18:13:00 -0400
 permalink:  recursion_inception
 ---
 
@@ -88,8 +88,8 @@ we've gone all the way to the right and down, hit a wall, and are now backtracki
 
 ```
 if (resultOfRight || resultOfDown || resultOfLeft || resultOfUp) {
-   maze[x][y] = "X" 		
-   return true	 
+   maze[x][y] = "X"&#x2028;		
+   return true	&#x2028;
 }
 ```
 Since resultOfLeft = true, we return true and exit the inner function. The return statement of the inner function = resultOfLeft in the previous function:
